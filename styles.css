@@ -19,9 +19,9 @@ body{
 }
 
 .frame{
-  max-width:920px;
+  max-width:980px;
   margin:0 auto;
-  padding:28px 28px 120px; /* more negative space */
+  padding:40px 40px 140px; /* increased negative space for a premium feel */
 }
 
 .topbar{
@@ -55,10 +55,16 @@ body{
 .container{padding:2px 0 0}
 
 .hero{
-  padding:16px 0 28px;
   display:flex;
   flex-direction:column;
-  gap:16px;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  background:var(--panel-strong);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:26px;
+  padding:44px 34px;
+  margin-bottom:28px;
 }
 
 .eyebrow{
@@ -69,15 +75,19 @@ body{
   text-transform:uppercase;
 }
 
-.score-wrap{display:flex;flex-direction:column;gap:12px}
+.score-wrap{display:flex;flex-direction:column;gap:8px;align-items:center}
 
 .score-value{
-  font-size:clamp(72px, 14vw, 116px);
-  font-weight:500;
-  line-height:0.92;
+  font-size:clamp(84px, 14vw, 140px);
+  font-weight:600;
+  line-height:0.9;
   letter-spacing:-0.03em;
-  transition:transform .35s ease;
+  transition:transform .45s cubic-bezier(.2,.9,.2,1), opacity .45s ease;
+  transform:scale(.98);
+  opacity:0;
 }
+
+.score-value.revealed{transform:scale(1);opacity:1}
 
 .score-meta{
   margin:0;
