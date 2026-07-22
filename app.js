@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   const businessHealthMetrics = {
-    revenue: { value: sampleRevenue.month, target: 40000, mode: 'currency' },
+    revenue: { value: 34210, target: 40000, mode: 'currency' },
     chairUtilization: { value: 0.76, target: 1, mode: 'ratio' },
-    rebooking: { value: sampleClients.filter(client=>client.rebook === 'Yes').length / sampleClients.length, target: 1, mode: 'ratio' },
+    rebooking: { value: 0.67, target: 1, mode: 'ratio' },
     marketing: { value: 0.68, target: 1, mode: 'ratio' },
     retailSales: { value: 0.58, target: 1, mode: 'ratio' },
     staffPerformance: { value: 0.84, target: 1, mode: 'ratio' }
