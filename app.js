@@ -77,4 +77,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
     focus.style.transform = 'translateY(-2px)';
     setTimeout(()=>{focus.style.transform='';},450);
   });
+
+  // Sidebar collapse
+  const sidebar = document.getElementById('sidebar');
+  const collapse = document.getElementById('collapse');
+  collapse.addEventListener('click', ()=>{
+    sidebar.classList.toggle('collapsed');
+  });
+
+  // KPI cards clickable to open detail overlay
+  const detailOverlay = document.getElementById('detail-overlay');
+  const detailContent = document.getElementById('detail-content');
+  const detailClose = document.getElementById('detail-close');
+
+  function openDetail(module){
+    detailOverlay.setAttribute('aria-hidden','false');
+    detailContent.innerHTML = `<h1>${module}</h1><p>Detailed ${module} view — ready to connect to your data sources. Focused, minimal and full-bleed for executive review.</p>`;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetail(){
+    detailOverlay.setAttribute('aria-hidden','true');
+    detailContent.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  detailClose.addEventListener('click', closeDetail);
+  detailOverlay.addEventListener('click', (e)=>{ if(e.target===detailOverlay) closeDetail(); });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDetail(); });
+
+  // attach click handlers to nav items and KPI cards
+  document.querySelectorAll('.nav-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>openDetail(btn.textContent.trim()));
+  });
+  document.querySelectorAll('.kpi-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const id = card.id || card.dataset.target;
+      const title = card.querySelector('.kpi-label')?.textContent || 'Detail';
+      openDetail(title);
+    });
+  });
 });
