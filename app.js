@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const healthEl = document.getElementById('health');
   const healthMetaEl = document.querySelector('.score-meta');
   const businessHealthScore = 90;
-  healthEl.textContent = businessHealthScore;
+  function getBusinessHealthScore(){
+    return 90;
+  }
+  healthEl.textContent = getBusinessHealthScore();
 
   const businessHealthWeights = {
     revenue: 0.30,
