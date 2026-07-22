@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     healthEl.textContent = value;
   },16);
 
+  // reveal the large score once the count animation completes
+  setTimeout(()=>{
+    healthEl.classList.add('revealed');
+  }, dur + 120);
+
   // KPI placeholders ready to be wired to real data sources
   const kpi = {
     revenue: { el: document.getElementById('rev-value'), format: v=>`$${v.toLocaleString()}` },
@@ -38,6 +43,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!kpi[key]) return;
     const cfg = kpi[key];
     cfg.el.textContent = cfg.format(data);
+    // subtle pop when value updates
+    cfg.el.classList.add('animated');
+    setTimeout(()=>cfg.el.classList.remove('animated'), 380);
   }
 
   // simple demo animation to show live-ready cards (keeps values neutral)
