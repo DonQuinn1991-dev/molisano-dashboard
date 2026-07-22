@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MOLISANO Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="frame">
+      <header class="topbar">
+        <div class="brand" aria-label="MOLISANO">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img">
+              <rect x="6" y="6" width="36" height="36" rx="10" />
+              <path d="M15 16h10.5c4.1 0 7.5 3.4 7.5 7.5S29.6 31 25.5 31H15" />
+              <path d="M15 16v15" />
+            </svg>
+          </span>
+          <span class="brand-word">MOLISANO</span>
+        </div>
+        <div class="date" id="today"></div>
+      </header>
+
+      <main class="container">
+        <section class="hero" aria-labelledby="health-title">
+          <p class="eyebrow">Business Health</p>
+          <div class="score-wrap">
+            <div class="score-value" id="health">0</div>
+            <p class="score-meta">Steady, clear, and intact</p>
+          </div>
+        </section>
+
+        <section class="card focus-panel" aria-label="Today focus">
+          <p class="card-kicker">Today's Focus</p>
+          <h2 id="focus">Guide the next important decision with quiet clarity.</h2>
+          <p class="card-meta">Priority • Focused • Calm</p>
+        </section>
+
+        <section class="panel-grid">
+          <article class="panel">
+            <p class="panel-title">Revenue</p>
+            <p class="panel-copy">Quietly moving upward</p>
+          </article>
+
+          <article class="panel">
+            <p class="panel-title">Team</p>
+            <p class="panel-copy">Aligned and attentive</p>
+          </article>
+
+          <article class="panel">
+            <p class="panel-title">Marketing</p>
+            <p class="panel-copy">Signals remain strong</p>
+          </article>
+
+          <article class="panel">
+            <p class="panel-title">Review</p>
+            <p class="panel-copy">A thoughtful reflection</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <button class="jarvis" id="jarvis" aria-label="Jarvis voice assistant">
+      <span class="mic">◉</span>
+      <span class="label">Jarvis</span>
+    </button>
+
+    <script src="app.js"></script>
+  </body>
+</html>
