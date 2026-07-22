@@ -4,7 +4,83 @@ document.addEventListener('DOMContentLoaded', ()=>{
   today.textContent = d.toLocaleDateString(undefined,{weekday:'short', month:'short', day:'numeric'});
 
   const healthEl = document.getElementById('health');
-  let target = 92;
+  const healthMetaEl = document.querySelector('.score-meta');
+  const businessHealthScore = 90;
+  healthEl.textContent = businessHealthScore;
+
+  const businessHealthWeights = {
+    revenue: 0.30,
+    chairUtilization: 0.20,
+    rebooking: 0.20,
+    marketing: 0.10,
+    retailSales: 0.10,
+    staffPerformance: 0.10
+  };
+
+  function clampScore(value){
+    return Math.max(0, Math.min(100, value));
+  }
+
+  function normalizeMetric(metric){
+    const { value, target, mode = 'ratio' } = metric;
+    if(mode === 'percent') return clampScore(value);
+    if(mode === 'currency') return clampScore((value / target) * 100);
+    return clampScore((value / target) * 100);
+  }
+
+  function calculateBusinessHealth(metrics, weights){
+    const components = Object.entries(weights).map(([key, weight])=>{
+      const metric = metrics[key];
+      const score = normalizeMetric(metric);
+      return { key, score, weight };
+    });
+
+    const overall = components.reduce((sum, item)=> sum + (item.score * item.weight), 0);
+    const rounded = Math.round(overall);
+
+    let status = 'Critical';
+    if(rounded >= 85) status = 'Excellent';
+    else if(rounded >= 70) status = 'Good';
+    else if(rounded >= 50) status = 'Needs Attention';
+
+    const weakest = components.slice().sort((a,b)=>a.score - b.score)[0];
+    let recommendation = 'Revenue is below target.';
+    if(weakest){
+      switch(weakest.key){
+        case 'chairUtilization':
+          recommendation = 'Move James overflow to Jay.';
+          break;
+        case 'rebooking':
+          recommendation = 'Rebooking has dropped below target.';
+          break;
+        case 'retailSales':
+          recommendation = 'Retail sales are falling.';
+          break;
+        case 'marketing':
+          recommendation = 'Marketing momentum is slipping.';
+          break;
+        case 'staffPerformance':
+          recommendation = 'Staff performance is under target.';
+          break;
+        default:
+          recommendation = 'Revenue is below target.';
+      }
+    }
+
+    return { score: rounded, status, recommendation };
+  }
+
+  const businessHealthMetrics = {
+    revenue: { value: sampleRevenue.month, target: 40000, mode: 'currency' },
+    chairUtilization: { value: 0.76, target: 1, mode: 'ratio' },
+    rebooking: { value: sampleClients.filter(client=>client.rebook === 'Yes').length / sampleClients.length, target: 1, mode: 'ratio' },
+    marketing: { value: 0.68, target: 1, mode: 'ratio' },
+    retailSales: { value: 0.58, target: 1, mode: 'ratio' },
+    staffPerformance: { value: 0.84, target: 1, mode: 'ratio' }
+  };
+
+  const healthState = calculateBusinessHealth(businessHealthMetrics, businessHealthWeights);
+  let target = healthState.score;
   let value = 0;
   const dur = 1200;
   const step = Math.max(1, Math.floor(target / (dur / 16)));
@@ -17,6 +93,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // reveal the large score once the count animation completes
   setTimeout(()=>{
     healthEl.classList.add('revealed');
+    if(healthMetaEl){
+      healthMetaEl.innerHTML = `<div>${healthState.status}</div><div>${healthState.recommendation}</div>`;
+    }
   }, dur + 120);
 
   // KPI placeholders ready to be wired to real data sources
